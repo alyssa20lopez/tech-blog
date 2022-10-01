@@ -1,6 +1,42 @@
 const router = require('express').Router();
 const { Blog } = require('../../models');
 
+router.get('/', auth, async (req, res) => {
+  try {
+    const newBlog = await Blog.findAll({
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+    res.status(500).json(newBlog);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const newBlog = await Blog.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [
+        {
+          model: User,
+        },
+      ],
+    });
+    if (!newBlog) {
+      res.status(404).json('No blog found with that ID');
+    }
+    res.status(200).json(newBlog);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const newBlog = await Blog.create({
