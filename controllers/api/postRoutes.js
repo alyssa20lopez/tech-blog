@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update Post
-router.put('/onepost/id:', async (req, res) => {
+router.put('/singlepost/id:', async (req, res) => {
   const {title, content} = req.body;
   console.log (title, content)
   try {
