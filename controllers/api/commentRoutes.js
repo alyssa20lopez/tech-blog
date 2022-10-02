@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const auth = require('../../utils/auth')
 
-router.post('/', auth (req, res) => {
+router.post('/', auth, (req, res) => {
   Comment.create({ ...req.body, memberId: req.session.memberId })
       .then(newComment => {
         res.json(newComment);
