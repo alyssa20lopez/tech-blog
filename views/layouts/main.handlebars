@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Tech Blog</title>
-  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>The Tech Word</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 
-<body class="flex-column min-100-vh">
-  <nav class="navbar">
-    <ul>
-      <li class="li-inline nav-item"><a href="/">Home</a></li>
-      <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
-      <li class="li-inline nav-item"><a href="/login">Login</a></li>
-      <li class="li-inline nav-item"><a href="#" id="logout-link">Logout</a></li>
-    </ul>
-  </nav>
-  <header class="hero">
-    <h1 class="app-title"><a href="/">The Tech Blog</a></h1>
-  </header>
+<body>
+  <div class="container wrapper">
+<header class="row">
+  <h1><a class="logo" href="/">The Tech Word</a></h1>
+      <nav>
+        <ul class="navbar">
+              <li><a class="link" href="/">Home</a></li>
+               <li><a class="link" href="/dashboard">Dashboard</a></li>
+              {{#if loggedIn}}
+               <li><a class="link" href="/" id="logout">Logout</a></li>
+              {{else}}
+               <li><a class="link" href="/login">Login</a></li>
+              {{/if}}
+        </ul>
+      </nav>
 
-  <main class="col-auto">
-    {{{body}}}
-  </main>
+    
+</header>
 
-  <footer class="flex-row justify-center">
-    &copy; The Tech Blog Folks
-  </footer>
+<main>
+  {{{ body }}}
+</main>
+
+<footer class="footer">
+    <div class="row">
+        <p>
+          The Tech Word by <a href="https://github.com/alyssa20lopez">Alyssa Lopez</a>
+        </p>
+    </div>
+</footer>
+
+    {{#if loggedIn}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <script src="/js/logout.js"></script>
+    {{/if}}
+</div>
 </body>
 
 </html>
-<script src="/javascript/logout.js"></script>
