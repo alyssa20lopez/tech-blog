@@ -1,48 +1,16 @@
 const router = require('express').Router();
 const { Member } = require('../../models');
 
-router.get('/', async (req, res) => {
-  try {
-    const memberData = await Member.findAll({
-      include: [
-        {
-          model: Member,
-        },
-      ],
-    });
-    res.status(200).json(memberData);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-router.get('/:id', async (req, res) => {
-  try {
-    const memberData = await Member.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [
-        {
-          model: Member,
-        }
-      ],
-    });
-    if (!memberData) {
-      res.status(404).json('No user found with that ID');
-    }
-    res.status(200).json(memberData);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
 router.post('/', async (req, res) => {
   try {
-    const memberData = await Member.create(req.body);
+    const memberData = await Member.create({
+      username: req.body.username,
+      username: req.body.password
+    })
 
     req.session.save(() => {
       req.session.member_id = memberData.id;
+      req.session.username = memberData.username;
       req.session.logged_in = true;
 
       res.status(200).json(memberData);
@@ -54,12 +22,12 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    const memberData = await Member.findOne({ where: { email: req.body.email } });
+    const memberData = await Member.findOne({ where: { username: req.body.username } });
 
     if (!memberData) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'No user account found, please try again' });
       return;
     }
 
@@ -74,6 +42,7 @@ router.post('/login', async (req, res) => {
 
     req.session.save(() => {
       req.session.member_id = memberData.id;
+      req.session.username = memberData.username;
       req.session.logged_in = true;
       
       res.json({ user: memberData, message: 'You are now logged in!' });
@@ -93,5 +62,7 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
+router.delete('')
 
 module.exports = router;
