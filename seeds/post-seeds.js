@@ -1,6 +1,6 @@
 const { Post } = require('../models');
 
-const post_data = [
+const postData = [
     {
         title: "Optimus, the Tesla Bot, Is Finally Here. Sorta. Well, at the Very Least It's Not a Guy in a Suit.",
         content: "Tesla has been promising to unveil a “humanoid” robot—a bipedal machine that can move, act, and behave like a person—since August, 2021. On Friday, the company finally revealed the long-awaited contraption, ushering it onto a stage at company headquarters in Palo Alto during its annual AI Day. According to Tesla ad copy, Optimus (you know, like the transformer) will someday help out everyday Americans with their household chores and will be an affordable product that most people can buy.",
@@ -29,6 +29,6 @@ const post_data = [
     }
 ]
 
-const seedPosts = () => Post.bulkCreate(post_data);
+const seedPosts = () => Post.bulkCreate(postData);
 
 module.exports = seedPosts;

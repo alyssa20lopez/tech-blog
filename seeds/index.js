@@ -1,6 +1,6 @@
-const seedMembers = require('./member');
-const seedPosts = require('./post');
-const seedComments = require('./comment');
+const seedMembers = require('./member-seeds');
+const seedPosts = require('./post-seeds');
+const seedComments = require('./comment-seeds');
 
 const sequelize = require('../config/connection');
 
