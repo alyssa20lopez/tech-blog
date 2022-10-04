@@ -5,7 +5,7 @@ router.post('/', async (req, res) => {
   try {
     const memberData = await Member.create({
       username: req.body.username,
-      username: req.body.password
+      password: req.body.password
     })
 
     req.session.save(() => {

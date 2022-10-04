@@ -8,6 +8,11 @@ header, .project:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
+a, a.link, a.logo {
+ color: #707961;
+ padding: 5px;
+}
+
 .wrapper{
   max-width: 1200px;
 }
@@ -17,33 +22,15 @@ header, .project:not(:last-child) {
   border: none;
   padding: 0;
   cursor: pointer;
-  color: #1b89bc;
+  color: #B3C398;
   text-decoration: none;
   font-size: 100%;
 }
 
 .no-button:hover {
-  color: #065b83;
+  color: #879177;
   text-decoration: underline;
 }
-
-.logo:link{
-  color: black;
-  text-decoration: none;
-}
-
-.logo:visited{
-  color: black;
-  text-decoration: none;
-}
-
-.logo:hover{
-  color: black;
-  text-decoration: none;
-  opacity: 0.7;
-  transition: 0.5s ease-in-out;
-}
-
 .navbar {
   display: flex;
   justify-content: flex-end;
@@ -51,18 +38,11 @@ header, .project:not(:last-child) {
   list-style-type: none;
   margin: 0;
   font-size: 1.5em;
-  
-  
 }
 
 .navbar a{
   text-decoration: none;
   margin: 0 5px
-}
-
-.navbar a:visited{
-  text-decoration: none;
-  color: inherit;
 }
 
 .navbar a:hover{
@@ -72,30 +52,15 @@ header, .project:not(:last-child) {
 
 .post{
   margin: 20px 0;
-  border: 1px lightgrey solid;
+  border: 1px #626956 solid;
   text-align: right;
 }
 
 .post-title{
-  background-color: lightgrey;
+  background-color: #D8E0CC;
   padding: 15px;
   margin-top: 0;
   text-align: left;
-}
-
-.post-title a:link{
-  color: #617ab7;
-  text-decoration: none;
-}
-
-.post-title a:visited{
-  color: #617ab7;
-  text-decoration: none;
-}
-
-.post-title a:hover{
-  text-decoration: none;
-  color: #0e506e;
 }
 
 .post-content{
@@ -117,7 +82,7 @@ header, .project:not(:last-child) {
   font-style: italic;
 }
 
-.post-username{
+.post-member{
   font-weight: bold;
 }
 
@@ -167,7 +132,7 @@ header, .project:not(:last-child) {
 .comment-container{
   margin-top: 20px;
   padding: 10px;
-  border: 1px #d3d3d3 solid;
+  border: 2px #626956 solid;
   border-radius: 10px;
 }
 
@@ -190,7 +155,7 @@ header, .project:not(:last-child) {
   margin-left: 10px;
 }
 .dashboard-post{
-  border: 1px #d3d3d3 solid;
+  border: 2px #626956 solid;
 }
 
 .new-post-button{

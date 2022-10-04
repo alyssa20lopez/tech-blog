@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Post, Comment, Member } = require('../models');
 
-// Get Post Id
+// Get Post
 router.get('/', async (req, res) => {
   try {
     if(!req.session.logged_in){

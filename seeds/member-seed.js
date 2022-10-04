@@ -3,23 +3,23 @@ const { Member } = require("../models");
 const memberData = [
   {
     username: "rorygilmore",
-    password: "pass12345",
+    password: "p@ss123456",
   },
   {
     username: "lorelaigilmore",
-    password: "pass12345",
+    password: "paZZ0123123",
   },
   {
     username: "jessmariano",
-    password: "pass12345",
+    password: "p@ssW0RD123456",
   },
   {
     username: "deanforester",
-    password: "pass12345",
+    password: "passWoRd012345",
   },
   {
     username: "lukedanes",
-    password: "pass12345",
+    password: "Pass12345678",
   },
 ];
 
