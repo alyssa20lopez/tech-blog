@@ -1,106 +1,79 @@
-const router = require("express").Router();
-const { Post, Comment, Member } = require("../models");
+const router = require('express').Router();
+const { Post, Comment, Member } = require('../models');
 
-router.get("/", async (req, res) => {
-  try {
-    const homepageData = await Post.findAll({
-      attributes: ["id", "title", "content","createdAt"],
-      include: {
-        model: Member,
-        attributes: ["username"],
-      },
-    }).catch((err) => {
-      res.json(err);
-    });
-
-    const posts = homepageData.map((post) => post.get({ plain: true }));
-
-    res.render("homepage", {
-      posts,
-      loggedIn: req.session.loggedIn,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+router.get("/", (req, res) => {
+    Post.findAll({
+      attributes: ['id', 'title', 'content','createdAt'],
+      include: [
+        {
+          model: Comment,
+          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'createdAt'],
+          include: {
+            model: Member,
+            attributes: ['username']
+          }
+        },
+        {
+          model: Member,
+          attributes: ["username"]
+        }
+      ]
+    })
+      .then(postData => {
+          const posts = postData.map(post => post.get ({ plain: true}));
+          res.render('homepage', {
+             posts, 
+             loggedIn: req.session.loggedIn,
+          });
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
 });
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
-
   res.render('login');
 });
 
 router.get('/signup', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
   res.render('signup');
 });
 
-router.get('/dashboard', async (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('dashboard', {loggedIn: (req.session.loggedIn)});
-  const member = await Member.findOne({
+router.get('/post/:id', (req, res) => {
+  Post.findOne({
     where: {
-      username: req.body.username,
+      id: req.params.id,
     },
+    attributes: ['id', 'title', 'content', 'createdAt'],
     include: [
       {
-        model: Member,
-        attributes: ['username'],
-      },
-    ],
-  });
-  const memberData= Member.get({plain:true});
-  console.log(memberData);
-  res.render('dashboard', memberData);
-});
-
-
-router.get("/singlepost/:id", async (req, res) => {
-  try {
-    if (!req.session.logged_in) {
-      res.redirect("/login");
-      return;
-    }
-    const postDb = await Post.findByPk(req.params.id, {
-      attributes: ["id", "title", "content", "createdAt"],
-      include: {
-        model: Member,
-        attributes: ["username"],
-      },
+        model: Comment,
+        attributes: ["id", "comment_text", "post_id", "user_id", "createdAt"],
+        include: {
+          model: Member,
+          attributes: ['username']
+        }
+      }
+    ]
+  })
+    .then(postData => {
+      if(!postData){
+        res.status(404).json({ message: 'No post found with this id'});
+        return;
+      }
+      const post = postData.get({ plain: true });
+      res.render('single-post', {
+        post,
+        loggedIn: req.session.loggedIn
+      });
+    })
+    .catch(err => {
+      res.status(500).json(err);
     });
-    const commentDb = await Comment.findAll({
-      where: {
-        post_id: req.params.id,
-      },
-      attributes: ["id", "content", "createdAt"],
-      include: {
-        model: Member,
-        attributes: ["username"],
-      },
-    });
-
-    const postData = await postDb.get({ plain: true });
-    const commentData = await commentDb.map((comment) =>
-      comment.get({ plain: true })
-    );
-    postData.comments = commentData;
-
-    res.render("post", {
-      postData,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 module.exports = router;
