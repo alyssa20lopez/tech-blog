@@ -7,19 +7,19 @@ const memberData = [
   },
   {
     username: "lorelaigilmore",
-    password: "paZZ0123123",
+    password: "paZZ012345",
   },
   {
     username: "jessmariano",
-    password: "p@ssW0RD123456",
+    password: "passW0RD12345",
   },
   {
     username: "deanforester",
-    password: "passWoRd012345",
+    password: "passWoRd12345",
   },
   {
     username: "lukedanes",
-    password: "Pass12345678",
+    password: "pass12345",
   },
 ];
 
