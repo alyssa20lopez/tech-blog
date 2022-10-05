@@ -1,107 +1,74 @@
 const router = require('express').Router();
 const { Post, Comment, Member } = require('../models');
+const auth = require('../utils/auth');
 
 // Get Post
-router.get('/', async (req, res) => {
-  try {
-    if(!req.session.logged_in){
-      res.redirect('/login');
-      return;
-    }
-    const dashboardDb = await Post.findAll(
-      {
-        attributes: ['id','member_id','title','content'],
+router.get('/', auth, (req, res) => {
+    Post.findAll({
         where: {
           member_id: req.session.member_id
-        }
-      }
-    )
-    const memberPosts = dashboardDb.map(post => post.get({}))
-   
-    res.render('dashboard', {
-      memberPosts,
-      logged_in: req.session.logged_in
+        },
+        attributes: ['id', 'title', 'content', 'createdAt'],
+        include: [
+          {
+            model: Comment,
+            attributes: ['id', 'comment_text', 'user_id', 'post_id', 'createdAt'],
+            include: {
+              model: Member,
+              attributes: ['username']
+            }
+          },
+          {
+            model: Member,
+            attributes: ['username']
+          }
+        ]
     })
-
-  } catch (err) {
-    console.log(err)
-    res.status(500).end()
-  }
+    .then(postData => {
+      const post = postData.map(post => post.get({ plain: true }));
+      res.render('dashboard', { post, logged_in: true });
+    })
+    .catch (err => {
+      console.log(err)
+      res.status(500).json(err)
+    });
 });
 
 // Edit a Post
-router.get('/singlepost/:id', async (req, res) => {
-  try {
-    const postDb = await Post.findByPk(req.params.id, {
-      attributes: ['id','title','content'],
-    })
-    const postData = postDb.get({ plain: true })
-    console.log(postData);
-    
-    res.render('singlepost', {
-      postData,
-      logged_in: req.session.logged_in
-    })
-
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Post to Dashboard
-router.post('/', async (req, res) => {
-
-  const member_id = req.session.member_id;
-  const {title, content} =req.body;
-
-  try {
-    const newPost = await Post.create({
-      title,
-      content,
-      member_id
-    });
-
-    res.status(200).json(newPost);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-// Update Post
-router.put('/singlepost/id:', async (req, res) => {
-  const {title, content} = req.body;
-  console.log (title, content)
-  try {
-    const updatePost = await Post.update(
+router.get('/edit-post/:id', auth, (req, res) => {
+  Post.findByPk({
+    where: {
+      id: req.params.id
+    },
+    attributes: ['id','title','content', 'createdAt'],
+    include: [
       {
-        title,
-        content
-      },
-      {
-        where: {
-          id: req.params.id
+        model: Comment,
+        attributes: ['id', 'comment_text', 'user_id', 'post_id', 'createdAt'],
+        include: {
+          model: Member,
+          attributes: ['username']
         }
-      }
-    )  
-    res.status(200).json(updatePost);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-// Delete Post
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletePost = await Post.destroy({
-      where: {
-        id: req.params.id,
       },
-    });
+      {
+        model: Member,
+        attributes: ['username']
+      }
+    ]
+  })
+  .then(postData => {
+      if (!postData) {
+        res.status(404).json({ message: 'No post found with this id'});
+        return;
+      }
+      const post = postData.get({ plain: true });
 
-    res.status(200).json(deletePost);
-  } catch (err) {
+      res.render('edit-post', { post, logged_in: true });
+  })
+  .catch(err => {
+    console.log(err)
     res.status(500).json(err);
-  }
+  });
 });
 
 module.exports = router;

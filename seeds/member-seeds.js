@@ -18,7 +18,7 @@ const memberData = [
   },
   {
     username: "deanforester",
-    email: "sk8terboy@gmail.com",
+    email: "sk8terboy@gmail.com",  
     password: "passWoRd12345"
   },
   {
