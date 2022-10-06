@@ -13,18 +13,34 @@ Comment.init(
     },
     comment_text: {
       type: DataTypes.STRING,
+      allowNull: false,
     }, 
     member_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      references: {
+        model: 'member',
+        key: 'id'
+      }
     },
     post_id: {
       type: DataTypes.INTEGER,
+      references: {
+        model: 'post',
+        key: 'id'
+      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
       allowNull: false,
-    }
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'comment',
   }
 );
 
