@@ -14,7 +14,7 @@ Comment.init(
     comment_text: {
       type: DataTypes.STRING,
     }, 
-    user_id: {
+    member_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

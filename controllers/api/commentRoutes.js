@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const { Comment } = require('../../models');
-const { restore } = require('../../models/Member');
 const auth = require('../../utils/auth');
 
-// Get Comments
+// Get All Comments
 router.get('/', auth, (req, res) => {
   Comment.findAll({
-    attributes: ['id', 'comment_text', 'user_id', 'post_id', 'createdAt'],
+    attributes: ['id', 'comment_text', 'member_id', 'post_id', 'createdAt'],
     order: [['createdAt', 'DESC']]
   })
   .then(commentData => res.json(commentData))
@@ -21,7 +20,7 @@ router.post('/', auth, (req, res) => {
   if (req.session.logged_in) {
     Comment.create({
       comment_text: req.body.comment_text,
-      user_id: req.body.user_id,
+      member_id: req.body.member_id,
       post_id: req.body.post_id
     })
     .then(commentData => res.json(commentData))

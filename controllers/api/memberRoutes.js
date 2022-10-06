@@ -1,65 +1,78 @@
 const router = require('express').Router();
-const { Member } = require('../../models');
+const { Member, Post, Comment } = require('../../models');
 
-router.get('/', async (req, res) => {
-  try {
-    const members = await Member.findAll({
-      include: [
-        {
-          model: Member,
-          attributes: ['username'],
-        },
-      ],
-    });
-    res.status(200).json(members);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+// Get ALL Members
+router.get('/', (req, res) => {
+  Member.findAll({
+    attributes: { exclude: ['password'] }
+  })
+  .then(memberData => res.json(memberData))
+  .catch (err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
+// Get Member by Id
 router.get('/:id', async (req, res) => {
-  try {
-    const member = await Member.findOne({
-      where: {
-        id: req.params.id,
+  Member.findOne({
+    attributes: { exclude: ['password'] },
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      {
+        model: Post,
+        attributes: ['id', 'title', 'content', 'createdAt']
       },
-      include: [
-        {
-          model: Member,
-          attributes: ['username'],
-        },
-      ],
-    });
-    if (!member) {
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'createdAt'],
+        include: {
+          model: Post,
+          attributes: ['title']
+        }
+      }
+    ]
+  })
+  .then(memberData => {
+    if (!memberData) {
       res.status(404).json('No user found with that ID');
+      return;
     }
-    res.status(200).json(member);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+    res.json(memberData);
+  })
+  .catch (err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const memberData = await Member.create({
-      username: req.body.username,
+// Post
+router.post('/', (req, res) => {
+  Member.create({
+      member_name: req.body.member_name,
+      email: req.body.email,
       password: req.body.password
     })
+    .then(memberData => {
     req.session.save(() => {
       req.session.member_id = memberData.id;
+      req.session.member_name = memberData.member_name;
       req.session.logged_in = true;
 
-      res.status(200).json(memberData);
+      res.json(memberData);
     });
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  })
 });
 
-router.post('/login', async (req, res) => {
-  try {
-    const memberData = await Member.findOne({ where: { username: req.body.username } });
-
+router.post('/login', (req, res) => {
+  Member.findByPk({
+    where: {
+      member_name: req.body.member_name
+    }
+  })
+  .then(memberData => {
     if (!memberData) {
       res
         .status(400)
@@ -67,7 +80,7 @@ router.post('/login', async (req, res) => {
       return;
     }
     const validPassword = memberData.checkPassword(req.body.password);
-
+  
     if (!validPassword) {
       res
         .status(400)
@@ -76,17 +89,15 @@ router.post('/login', async (req, res) => {
     }
     req.session.save(() => {
       req.session.member_id = memberData.id;
-      req.session.username = memberData.username;
+      req.session.member_name = memberData.member_name;
       req.session.logged_in = true;
       
       res.json({ member: memberData, message: 'You are now logged in!' });
     });
-
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  })
 });
 
+// Logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
@@ -94,40 +105,6 @@ router.post('/logout', (req, res) => {
     });
   } else {
     res.status(404).end();
-  }
-});
-
-router.put('/', async (req, res) => {
-  try {
-    const member = await Member.update(req.body, {
-      where: {
-        id: req.session.member_id,
-      },
-    });
-    if (!member) {
-      res.status(404).json('No member found with that ID');
-    }
-    res.status(200).json(member);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-router.delete('/member/:id', async (req, res) => {
-  try {
-    const memberData = await Member.destroy({
-      where: {
-        id: req.params.member_id,
-      },
-    });
-    if (!memberData) {
-      res.status(404).json({ message: 'No member found with this id!' });
-    }
-    req.session.destroy(() => {
-      res.status(204).end().json('Member has been deleted successfully!');
-    });
-  } catch (error) {
-    res.status(500).json(error);
   }
 });
 

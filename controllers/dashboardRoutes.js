@@ -12,15 +12,15 @@ router.get('/', auth, (req, res) => {
         include: [
           {
             model: Comment,
-            attributes: ['id', 'comment_text', 'user_id', 'post_id', 'createdAt'],
+            attributes: ['id', 'comment_text', 'member', 'post_id', 'createdAt'],
             include: {
               model: Member,
-              attributes: ['username']
+              attributes: ['member_name']
             }
           },
           {
             model: Member,
-            attributes: ['username']
+            attributes: ['member_name']
           }
         ]
     })
@@ -44,15 +44,15 @@ router.get('/edit-post/:id', auth, (req, res) => {
     include: [
       {
         model: Comment,
-        attributes: ['id', 'comment_text', 'user_id', 'post_id', 'createdAt'],
+        attributes: ['id', 'comment_text', 'member_id', 'post_id', 'createdAt'],
         include: {
           model: Member,
-          attributes: ['username']
+          attributes: ['member_name']
         }
       },
       {
         model: Member,
-        attributes: ['username']
+        attributes: ['member_name']
       }
     ]
   })

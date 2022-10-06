@@ -16,7 +16,7 @@ Member.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    member_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
