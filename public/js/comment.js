@@ -1,22 +1,24 @@
-const newCommentHandler = async (event) => {
+const commentFormHandler = async (event) => {
   event.preventDefault();
 
-  const commentInput = document.querySelector('#comment-input').value.trim();
-  const content = commentInput.value.trim();
-  const post_id = window.location.pathname.replace('/single/','');
+  const comment_text = document.querySelector('#comment-body').value.trim();
 
-  if (!content) {
+  const post_id = window.location.toString().split('/')[
+    window.location.toString().split('/').length - 1
+  ];
+
+  if (!comment_text) {
     alert('You must add text for your comment!')
   } else {
-    const response = await fetch('/commentRoutes', 
+    const response = await fetch('/api/comment', 
     {
       method: 'POST',
-      body: JSON.stringify({ content, post_id }),
+      body: JSON.stringify({ post_id, comment_text }),
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-      location.reload()
+      document.location.reload()
     } else {
       alert('Failed to create comment!');
     }
@@ -24,5 +26,5 @@ const newCommentHandler = async (event) => {
 };
 
 document
-  .querySelector('.comment-form')
-  .addEventListener('submit', newCommentHandler);
+  .querySelector('#comment-form')
+  .addEventListener('submit', commentFormHandler);

@@ -1,13 +1,12 @@
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
-  const username = document.querySelector('#username-login').value.trim();
+  const member_name = document.querySelector('#member_name-login').value.trim();
   const password = document.querySelector('#password-login').value.trim();
 
-  if (username && password) {
-    const response = await fetch('/api/member/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
+  const response = await fetch('/api/member/login', {
+    method: 'POST',
+    body: JSON.stringify({ member_name, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -16,9 +15,8 @@ const loginFormHandler = async (event) => {
     } else {
       alert('Failed to log in.');
     }
-  }
+    response.json().then(data => console.log(data))
 };
 
 document.querySelector('#submit');
 document.addEventListener('submit', loginFormHandler);
-
