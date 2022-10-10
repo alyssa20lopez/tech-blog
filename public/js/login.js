@@ -1,22 +1,27 @@
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
-  const member_name = document.querySelector('#member_name-login').value.trim();
-  const password = document.querySelector('#password-login').value.trim();
+  const member_name = $('#member_name-login').val().trim();
+  const password = $('#password-login').val().trim();
 
-  const response = await fetch('/api/login', {
-    method: 'POST',
-    body: JSON.stringify({ member_name, password }),
+  if (member_name && password) {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ member_name, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
+    const loginData = await response.json();
+    if(response.status === 400 || response.status === 404){
+      return alert(loginData.message);
+    }
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
       alert('Failed to log in.');
     }
-    response.json().then(data => console.log(data))
+    // response.json().then(data => console.log(data))
+  }
 };
 
-document.querySelector('#submit');
-document.addEventListener('submit', loginFormHandler);
+$('#submit').submit(loginFormHandler);
