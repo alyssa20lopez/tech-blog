@@ -1,16 +1,20 @@
 const signupFormHandler = async (event) => {
   event.preventDefault();
-
-  const member_name = document.querySelector('#member_name-signup').value.trim();
-  const password = document.querySelector('#password-signup').value.trim();
+ 
+  const member_name = $("#member_name-signup").val().trim();
+  const password = $("#password-signup").val().trim();
 
   if (member_name && password) {
-    const response = await fetch('/api/members', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
-      body: JSON.stringify({ user, pass }),
+      body: JSON.stringify({ member_name, password }),
       headers: { 'Content-Type': 'application/json' },
     });
 
+    const signupData = await response.json();
+    if(response.status === 400 || response.status === 404){
+      return alert(signupData.message);
+    }
     if (response.ok) {
       document.location.replace('/');
     } else {
@@ -19,6 +23,4 @@ const signupFormHandler = async (event) => {
   }
 };
 
-document
-  .querySelector('.signup-form')
-  .addEventListener('submit', signupFormHandler);
+$('#signupBtn').click(signupFormHandler);

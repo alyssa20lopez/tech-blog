@@ -48,7 +48,6 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-// Post
 router.post('/', (req, res) => {
   Member.create({
       member_name: req.body.member_name,
@@ -59,6 +58,7 @@ router.post('/', (req, res) => {
     req.session.save(() => {
       req.session.member_id = memberData.id;
       req.session.member_name = memberData.member_name;
+      req.session.email = memberData.email;
       req.session.logged_in = true;
 
       res.json(memberData);
@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  Member.findByPk({
+  Member.findOne({
     where: {
       member_name: req.body.member_name
     }

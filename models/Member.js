@@ -1,6 +1,6 @@
-const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
-const sequelize = require('../config/connection');
+const { Model, DataTypes } = require("sequelize");
+const bcrypt = require("bcrypt");
+const sequelize = require("../config/connection");
 
 class Member extends Model {
   checkPassword(loginPw) {
@@ -19,15 +19,15 @@ Member.init(
     member_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true
-      }
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -37,22 +37,23 @@ Member.init(
       },
     },
   },
+  // {
+  //   hooks: {
+  //     beforeCreate: async (newMemberData) => {
+  //       newMemberData.password = await bcrypt.hash(newMemberData.password, 8);
+  //       return newMemberData;
+  //     },
+  //     beforeUpdate: async (updatedMemberData) => {
+  //       updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 8);
+  //       return updatedMemberData;
+  //     },
+  //   },
   {
-    hooks: {
-      beforeCreate: async (newMemberData) => {
-        newMemberData.password = await bcrypt.hash(newMemberData.password, 10);
-        return newMemberData;
-      },
-      beforeUpdate: async (updatedMemberData) => {
-        updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 10);
-        return updatedMemberData;
-      },
-    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'member',
+    modelName: "member",
   }
 );
 
