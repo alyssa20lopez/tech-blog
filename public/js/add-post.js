@@ -13,7 +13,7 @@ const addFormHandler = async (event) => {
   if (response.ok) {
     document.location.replace("/dashboard");
   } else {
-    alert("response.statusText");
+    alert("Failed to create a post!");
   }
 };
 

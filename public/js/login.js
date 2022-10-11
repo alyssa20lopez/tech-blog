@@ -11,16 +11,11 @@ const loginFormHandler = async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    // const loginData = await response.json();
-    // if(response.status === 400 || response.status === 404){
-    //   return alert(loginData.message);
-    // }
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
       alert('Failed to log in.');
     }
-    // response.json().then(data => console.log(data))
   }
 };
 
