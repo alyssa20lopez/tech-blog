@@ -1,7 +1,7 @@
 const commentFormHandler = async (event) => {
   event.preventDefault();
 
-  const comment_text = document.querySelector('#comment-body').value.trim();
+  const comment_text = document.querySelector('input[name="comment-body"]').value.trim();
 
   const post_id = window.location.toString().split('/')[
     window.location.toString().split('/').length - 1
@@ -10,7 +10,7 @@ const commentFormHandler = async (event) => {
   if (!comment_text) {
     alert('You must add text for your comment!')
   } else {
-    const response = await fetch('/api/comment', 
+    const response = await fetch('/api/comments', 
     {
       method: 'POST',
       body: JSON.stringify({ post_id, comment_text }),
@@ -25,6 +25,4 @@ const commentFormHandler = async (event) => {
   }
 };
 
-document
-  .querySelector('#comment-form')
-  .addEventListener('submit', commentFormHandler);
+document.querySelector('.comment-form').addEventListener('submit', commentFormHandler);
