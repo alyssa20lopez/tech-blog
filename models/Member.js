@@ -33,24 +33,23 @@ Member.init(
       allowNull: false,
     },
   },
-  // {
-  //   hooks: {
-  //     beforeCreate: async (newMemberData) => {
-  //       newMemberData.password = await bcrypt.hash(newMemberData.password, 10);
-  //       return newMemberData;
-  //     },
-  //     beforeUpdate: async (updatedMemberData) => {
-  //       updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 10);
-  //       return updatedMemberData;
-  //     },
-  //   },
-  // },
   {
+    hooks: {
+      // set up beforeCreate lifecycle "hook" functionality
+      beforeCreate: async (newMemberData) => {
+        newMemberData.password = await bcrypt.hash(newMemberData.password, 10);
+        return newMemberData;
+      },
+      beforeUpdate: async (updatedMemberData) => {
+        updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 10);
+        return updatedMemberData;
+      }
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "member",
+    modelName: 'member'
   }
 );
 
