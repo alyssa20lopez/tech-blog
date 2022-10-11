@@ -4,7 +4,7 @@ const addFormHandler = async (event) => {
   const title = document.querySelector('input[name="post-title"]').value;
   const content = document.querySelector('input[name="content"]').value;
 
-  const response = await fetch(`/api/posts`, {
+  const response = await fetch('/api/posts', {
     method: "POST",
     body: JSON.stringify({ title, content }),
     header: { "Content-Type": "application/json" },
@@ -13,7 +13,7 @@ const addFormHandler = async (event) => {
   if (response.ok) {
     document.location.replace("/dashboard");
   } else {
-    alert("Failed to create a post!");
+    alert("Failed to create a new post!");
   }
 };
 
