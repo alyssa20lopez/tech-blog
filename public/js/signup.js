@@ -1,9 +1,9 @@
 const signupFormHandler = async (event) => {
   event.preventDefault();
  
-  const member_name = $("#member_name-signup").val().trim();
-  const email = $("#email-signup").val().trim();
-  const password = $("#password-signup").val().trim();
+  const member_name = document.querySelector("#member_name-signup").value.trim();
+  const email = document.querySelector("#email-signup").value.trim();
+  const password = document.querySelector("#password-signup").value.trim();
 
   if (member_name && password) {
     const response = await fetch('/api/member', {
@@ -24,4 +24,4 @@ const signupFormHandler = async (event) => {
   }
 };
 
-$('#signupBtn').submit(signupFormHandler);
+document.querySelector('#signup-form').addEventListener('submit', signupFormHandler);

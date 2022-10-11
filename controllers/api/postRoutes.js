@@ -3,7 +3,7 @@ const { Post, Comment, Member } = require('../../models');
 const auth = require('../../utils/auth');
 
 // Get All Posts
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
   Post.findAll({
     attributes: ['id', 'title', 'content', 'createdAt'],
     order: [['createdAt', 'DESC']],
@@ -22,7 +22,7 @@ router.get('/', auth, (req, res) => {
       }
     ]
   })
-  .then(postData => res.json(postData))
+  .then(postData => res.json(postData.reverse()))
   .catch (err => {
     console.log(err);
     res.status(500).json(err);
@@ -31,7 +31,7 @@ router.get('/', auth, (req, res) => {
 
 // Get Single Post
 router.get('/:id', (req, res) => {
-  Post.findByPk({
+  Post.findOne({
     where: {
       id: req.params.id
     },

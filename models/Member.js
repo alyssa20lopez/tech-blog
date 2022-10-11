@@ -19,7 +19,6 @@ Member.init(
     member_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -32,22 +31,20 @@ Member.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [8],
-      },
     },
   },
   // {
-  //   hooks: {
-  //     beforeCreate: async (newMemberData) => {
-  //       newMemberData.password = await bcrypt.hash(newMemberData.password, 8);
-  //       return newMemberData;
-  //     },
-  //     beforeUpdate: async (updatedMemberData) => {
-  //       updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 8);
-  //       return updatedMemberData;
+    // hooks: {
+    //   beforeCreate: async (newMemberData) => {
+    //     newMemberData.password = await bcrypt.hash(newMemberData.password, 10);
+    //     return newMemberData;
+    //   },
+    //   beforeUpdate: async (updatedMemberData) => {
+    //     updatedMemberData.password = await bcrypt.hash(updatedMemberData.password, 10);
+    //     return updatedMemberData;
   //     },
   //   },
+  // },
   {
     sequelize,
     timestamps: false,

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Post, Comment, Member } = require('../models');
 const auth = require('../utils/auth');
+const sequelize = require('../config/connection');
 
 // Get Post
 router.get('/', auth, (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', auth, (req, res) => {
         include: [
           {
             model: Comment,
-            attributes: ['id', 'comment_text', 'member', 'post_id', 'createdAt'],
+            attributes: ['id', 'comment_text', 'member_id', 'post_id', 'createdAt'],
             include: {
               model: Member,
               attributes: ['member_name']
@@ -35,7 +36,7 @@ router.get('/', auth, (req, res) => {
 });
 
 // Edit a Post
-router.get('/edit-post/:id', auth, (req, res) => {
+router.get('/edit/:id', auth, (req, res) => {
   Post.findByPk({
     where: {
       id: req.params.id
@@ -43,16 +44,16 @@ router.get('/edit-post/:id', auth, (req, res) => {
     attributes: ['id','title','content', 'createdAt'],
     include: [
       {
+        model: Member,
+        attributes: ['member_name']
+      },
+      {
         model: Comment,
         attributes: ['id', 'comment_text', 'member_id', 'post_id', 'createdAt'],
         include: {
           model: Member,
           attributes: ['member_name']
         }
-      },
-      {
-        model: Member,
-        attributes: ['member_name']
       }
     ]
   })
@@ -62,13 +63,16 @@ router.get('/edit-post/:id', auth, (req, res) => {
         return;
       }
       const post = postData.get({ plain: true });
-
       res.render('edit-post', { post, logged_in: true });
   })
   .catch(err => {
     console.log(err)
     res.status(500).json(err);
   });
+});
+
+router.get('/new', (req, res) => {
+    res.render('new-post');
 });
 
 module.exports = router;
