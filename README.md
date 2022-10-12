@@ -15,7 +15,7 @@ This application is a CMS-style blog site similar to a Wordpress site, where dev
 
 ## Submission
 
-[Heroku Link](https://tech-blog-927.herokuapp.com/)
+[Heroku Link](https://the-tech-girl.herokuapp.com/)
 ## Usage
 To use this application, first clone the project and navigate to VS Code. The following packages were installed through the command-line:
 - npm i express-handlebars
@@ -29,4 +29,4 @@ To use this application, first clone the project and navigate to VS Code. The fo
 ## Visuals
 Here is a visual of the front-end of the webpage design!
 
-![Alt text](./assets/tech-blog.png)
+![Alt text](./The-Tech-Girl.png)
