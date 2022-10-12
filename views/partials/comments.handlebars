@@ -1,16 +1,15 @@
 <div class="container row">
-<div class="comments">
-  {{#each this}}
+  <div id="comment-form" class="comments comment-form">
+    {{#each this}}
     <div class="card post comment-box">
-    <div class="card-body post-body">
-        <div class="card-text comment-text">
-            {{comment_text}}
-        </div>
-        <div class="comment-author">
-            {{member.member_name}}, {{format_date createdAt}}
-        </div>
+      <div class="card-body post-body">
+        <p class="card-text comment-text">
+          {{comment_text}}
+        </p>
+        <p class="card-text comment-member"> Commented by <span class="comment-member_name"> {{member_name}}</span> on {{format_date createdAt}}
+        </p>
+      </div>
     </div>
-    </div>
-  {{/each}}
-</div>
+    {{/each}}
+  </div>
 </div>

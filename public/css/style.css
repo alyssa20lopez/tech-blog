@@ -2,16 +2,17 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Inconsolata', monospace;
 }
 
 header {
   border-bottom: 1px solid #ccc;
 }
 
-
 a, a.link, a.logo {
  color: #707961;
  padding: 5px;
+ text-decoration: none;
 }
 
 .wrapper{
@@ -28,6 +29,10 @@ a, a.link, a.logo {
   font-size: 100%;
 }
 
+.dashboard-post {
+  border: #626956 2px solid;
+}
+
 .no-button:hover {
   color: #879177;
   text-decoration: underline;
@@ -35,10 +40,7 @@ a, a.link, a.logo {
 .navbar {
   display: flex;
   justify-content: flex-end;
-  position: relative;
-  list-style-type: none;
-  margin: 0;
-  font-size: 1.5em;
+  font-size: 23px;
 }
 
 .navbar a{
@@ -48,7 +50,7 @@ a, a.link, a.logo {
 
 .navbar a:hover{
   text-decoration: none;
-  color: inherit;
+  color: #B3C398;
 }
 
 .post{
@@ -56,6 +58,7 @@ a, a.link, a.logo {
   border: 1px #626956 solid;
   text-align: right;
 }
+
 
 .post-title{
   background-color: #D8E0CC;
@@ -105,48 +108,43 @@ a, a.link, a.logo {
   margin-top: 20px;
 }
 
-.signup-form div{
-  margin-bottom: 20px;
+.edit-post-form div, .login-form div, .signup-form div{
+  margin-bottom: 25px;
 }
 
-.login-form div{
-  margin-bottom: 20px;
-}
-
-.edit-post-form{
-  margin-top: 20px;
-}
-
-.edit-post-form div{
-  margin-bottom: 20px;
-}
-
-.register{
-  display: inline-block;
-  margin-top: 20px;
-}
-
-.single-post-container{
-  margin-top: 20px;
+.single-post-container, .new-post-form div, .edit-post-form{
+  margin-top: 30px;
 }
 
 .comment-container{
   margin-top: 20px;
-  padding: 10px;
-  border: 1px #626956 solid;
+  padding: 10px 15px;
+  border: 2px #626956 solid;
   border-radius: 10px;
 }
 
-.comment-button{
-  margin-top: 20px;
+.btn {
+  margin-top: 10px;
+  background-color:#D8E0CC;
+  color:#626956;
+}
+
+.delete-post-btn {
+  margin-left: 1%;
 }
 
 .comment-text{
   padding: 10px;
 }
 
-.comment-author{
-  padding: 10px;
+.comment-member{
+  text-align: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.comment-member_name{
   font-weight: bold;
 }
 
@@ -157,6 +155,6 @@ a, a.link, a.logo {
 }
 
 footer{
-  margin-top: 30px;
+  margin-top: 50px;
   font-size: 18px;
 }
