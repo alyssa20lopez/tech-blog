@@ -4,9 +4,10 @@
   padding: 0;
 }
 
-header, .project:not(:last-child) {
+header {
   border-bottom: 1px solid #ccc;
 }
+
 
 a, a.link, a.logo {
  color: #707961;
@@ -51,21 +52,21 @@ a, a.link, a.logo {
 }
 
 .post{
-  margin: 20px 0;
+  margin: 30px 0;
   border: 1px #626956 solid;
   text-align: right;
 }
 
 .post-title{
   background-color: #D8E0CC;
-  padding: 15px;
+  padding: 18px;
   margin-top: 0;
   text-align: left;
 }
 
 .post-content{
-  padding: 10px !important;
-  text-align: left !important;
+  padding: 10px;
+  text-align: left;
 }
 
 .post-button{
@@ -132,7 +133,7 @@ a, a.link, a.logo {
 .comment-container{
   margin-top: 20px;
   padding: 10px;
-  border: 2px #626956 solid;
+  border: 1px #626956 solid;
   border-radius: 10px;
 }
 
@@ -154,15 +155,8 @@ a, a.link, a.logo {
   margin-top: 20px;
   margin-left: 10px;
 }
-.dashboard-post{
-  border: 2px #626956 solid;
-}
-
-.new-post-button{
-  margin: 20px 0;
-}
 
 footer{
-  margin-top: 60px;
-  font-size: 1.4em;
+  margin-top: 30px;
+  font-size: 18px;
 }

@@ -25,19 +25,22 @@ router.get("/", auth, (req, res) => {
       },
     ],
   })
-    .then((postData) => {
-      const post = postData.map((post) => post.get({ plain: true }));
-      res.render("dashboard", { post, logged_in: true });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+  .then((postData) => {
+    const posts = postData.map((post) => post.get({ plain: true }));
+    console.log(posts);
+    res.render("dashboard", {
+      posts,
+      logged_in: req.session.logged_in,
     });
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  });
 });
 
 // Edit a Post
 router.get("/edit/:id", auth, (req, res) => {
-  Post.findByPk({
+  Post.findOne({
     where: {
       id: req.params.id,
     },
