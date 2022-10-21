@@ -9,7 +9,7 @@ Module 14: Model-View-Controller (MVC)
 4. [Visuals](#visuals)
 
 ## Description
-This application is a CMS-style blog site similar to a Wordpress site, where developers can publish their blog posts and comments on other developers' posts. It will follow the MVC paradigm in its architectural structure, using Handlebars.js as the template language, Sequalize as the ORM, and the expression-session npm package for authentication.
+This application is a CMS-style blog site similar to a Wordpress site, where developers can publish their blog posts and comments on other developers' posts. It will follow the MVC paradigm in its architectural structure, using Handlebars.js as the template language, Sequelize as the ORM, and the expression-session npm package for authentication.
 
 [GitHub Repo](https://github.com/alyssa20lopez/tech-blog)
 
